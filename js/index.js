@@ -9,6 +9,54 @@ function blurImg() {
 
 headerImg.addEventListener('mouseover', blurImg);
 
+////// Key Down //////
+function hideEverything(event) {
+  document.body.style.visibility = 'hidden';
+}
+
+document.addEventListener('keydown', hideEverything);
+
+///// Key Up //////
+function showEverything(event) {
+  document.body.style.visibility = 'visible';
+}
+
+document.addEventListener('keyup', showEverything);
+
+////// Wheel ///////
+const destinationImg = document.querySelector('.content-destination img');
+
+function zoom(event) {
+  event.preventDefault();
+
+  destinationImg.style.transform = 'scale(2)';
+}
+
+destinationImg.addEventListener('wheel', zoom);
+
+////// Drag and Drop //////
+const imgContentImg = document.querySelectorAll('.img-content img'),
+  textContent = document.querySelectorAll('.text-content');
+
+imgContentImg.forEach(img => {
+  img.setAttribute('draggable', 'true');
+});
+
+function drop() {
+  console.log('Dropped');
+}
+
+textContent.forEach(div => {
+  div.addEventListener('drop', drop);
+});
+
+/////// Load Event ////////
+function alertLoaded(event) {
+  alert('Page Loaded!');
+}
+
+window.addEventListener('load', alertLoaded);
+
 ////// Scroll Event ///////
 
 // Generate random color
@@ -29,3 +77,48 @@ function changeBgColor(e) {
 }
 
 window.addEventListener('scroll', changeBgColor);
+
+///// Select /////
+const header = document.querySelector('.main-navigation');
+
+function insertInput(event) {
+  const input = document.createElement('input');
+  input.setAttribute('type', 'text');
+  input.setAttribute('value', 'Party Bus!!!!');
+
+  header.appendChild(input);
+
+  function changeParagraph(event) {
+    const paragraphs = document.querySelectorAll('p'),
+      selection = event.target.value.substring(
+        event.target.selectionStart,
+        event.target.selectionEnd
+      );
+
+    paragraphs.forEach(paragraph => {
+      paragraph.textContent = selection;
+    });
+  }
+
+  input.addEventListener('select', changeParagraph);
+}
+
+///// Click /////
+header.addEventListener('click', insertInput);
+
+////// Double Click ////////
+const btn = document.querySelectorAll('.btn');
+
+function playMusic() {
+  const audio = document.createElement('audio'),
+    source = document.createElement('source');
+  audio.setAttribute('autoplay', 'true');
+  source.setAttribute('src', '../Club Jumpin MP3.mp3');
+  audio.appendChild(source);
+
+  document.body.appendChild(audio);
+}
+
+btn.forEach(item => {
+  item.addEventListener('dblclick', playMusic);
+});
