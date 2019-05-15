@@ -35,19 +35,40 @@ function zoom(event) {
 destinationImg.addEventListener('wheel', zoom);
 
 ////// Drag and Drop //////
-const imgContentImg = document.querySelectorAll('.img-content img'),
-  textContent = document.querySelectorAll('.text-content');
+const imgContent = document.querySelectorAll('.img-content img'),
+  textContent = document.querySelectorAll('.text-content'),
+  contentSectionDiv = document.querySelectorAll('.content-section div');
 
-imgContentImg.forEach(img => {
-  img.setAttribute('draggable', 'true');
-});
+imgContent.forEach(img => {
+  contentSectionDiv.forEach(item => {
+    function dragStart() {
+      item.style.border = 'none';
+    }
 
-function drop() {
-  console.log('Dropped');
-}
+    function dragEnter(event) {
+      event.preventDefault();
+      item.style.border = '3px dashed yellow';
+    }
 
-textContent.forEach(div => {
-  div.addEventListener('drop', drop);
+    function dragOver(event) {
+      event.preventDefault();
+      item.style.border = '3px dashed yellow';
+    }
+
+    function dragLeave() {
+      item.style.border = 'none';
+    }
+
+    function dragDrop() {
+      item.append(img);
+    }
+
+    item.addEventListener('drop', dragDrop);
+    item.addEventListener('dragstart', dragStart);
+    item.addEventListener('dragenter', dragEnter);
+    item.addEventListener('dragover', dragOver);
+    item.addEventListener('dragleave', dragLeave);
+  });
 });
 
 /////// Load Event ////////
@@ -80,13 +101,14 @@ window.addEventListener('scroll', changeBgColor);
 
 ///// Select /////
 const header = document.querySelector('.main-navigation');
+logoHeading = document.querySelector('.logo-heading');
 
 function insertInput(event) {
   const input = document.createElement('input');
   input.setAttribute('type', 'text');
-  input.setAttribute('value', 'Party Bus!!!!');
+  input.setAttribute('value', 'FUN Bus!!!!');
 
-  header.appendChild(input);
+  header.prepend(input);
 
   function changeParagraph(event) {
     const paragraphs = document.querySelectorAll('p'),
@@ -104,7 +126,7 @@ function insertInput(event) {
 }
 
 ///// Click /////
-header.addEventListener('click', insertInput);
+logoHeading.addEventListener('click', insertInput);
 
 ////// Double Click ////////
 const btn = document.querySelectorAll('.btn');
@@ -121,4 +143,13 @@ function playMusic() {
 
 btn.forEach(item => {
   item.addEventListener('dblclick', playMusic);
+});
+
+///// Prevent Default ///////
+const navItems = document.querySelectorAll('.nav-link');
+
+navItems.forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+  });
 });
