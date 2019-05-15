@@ -104,6 +104,10 @@ const header = document.querySelector('.main-navigation');
 logoHeading = document.querySelector('.logo-heading');
 
 function insertInput(event) {
+  // Stops logo heading click from bubbling up to header
+  event.stopPropagation();
+  console.log('logo heading clicked');
+
   const input = document.createElement('input');
   input.setAttribute('type', 'text');
   input.setAttribute('value', 'FUN Bus!!!!');
@@ -124,8 +128,13 @@ function insertInput(event) {
 
   input.addEventListener('select', changeParagraph);
 }
+function checkPropPropagation() {
+  console.log('Header Clicked');
+}
 
 ///// Click /////
+
+header.addEventListener('click', checkPropPropagation);
 logoHeading.addEventListener('click', insertInput);
 
 ////// Double Click ////////
